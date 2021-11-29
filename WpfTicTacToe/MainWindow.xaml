@@ -1,0 +1,149 @@
+﻿<Window x:Class="WpfTicTacToe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfTicTacToe"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="450" WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+	<Window.Resources>
+		<!-- Board Space Buttons-->
+		<Style TargetType="Button" x:Key="Button_Space">
+			<!--<Setter Property="Margin" Value="2"/>-->
+			<Setter Property="FontSize" Value="48"/>
+			<Setter Property="Background" Value="WhiteSmoke"/>
+			<EventSetter Event="Click" Handler="Button_Space_Click"/>
+			<EventSetter Event="Loaded" Handler="Button_Space_Loaded"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border x:Name="Button_Border" Background="{TemplateBinding Background}">
+							<ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Opacity" Value="0.9"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<!-- Control Buttons -->
+		<Style TargetType="Button" x:Key="Button_Control">
+			<Setter Property="Foreground" Value="Transparent"/>
+			<Setter Property="Panel.ZIndex" Value="1"/>
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+		<!-- Menu Buttons -->
+		<Style TargetType="Button" x:Key="Button_Menu">
+			<Setter Property="Height" Value="100"/>
+		</Style>
+		<!-- Menu Labels -->
+		<Style TargetType="Label" x:Key="Label_Menu">
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+	</Window.Resources>
+	<StackPanel>
+		<StackPanel.Background>
+			<LinearGradientBrush EndPoint="1, 0.5" StartPoint="0,0.5">
+				<GradientStop Color="Goldenrod"/>
+				<GradientStop Color="LightSkyBlue" Offset="1"/>
+			</LinearGradientBrush>
+		</StackPanel.Background>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="25"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="25"/>
+				<ColumnDefinition Width="25"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="25"/>
+			</Grid.RowDefinitions>
+			<Label Name="Label_Header" Grid.Column="1" Content="EkTicTacToe" Foreground="White"/>
+			<Button Name="Button_Minimize" Grid.Column="2" Click="Button_Minimize_Click">
+				<Button.Style>
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource Button_Control}">
+						<Setter Property="Background" Value="Transparent"/>
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="{x:Type Button}">
+									<Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+										<Line X1="6" X2="18" Y1="12" Y2="12" Stroke="White" StrokeThickness="1" Panel.ZIndex="2"/>
+										<Border Background="{TemplateBinding Background}"/>
+									</Grid>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+						<Style.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="LightGray"/>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</Button.Style>
+			</Button>
+			<Button Name="Button_Close" Grid.Column="3" Click="Button_Close_Click" >
+				<Button.Style>
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource Button_Control}">
+						<Setter Property="Background" Value="DarkRed"/>
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="{x:Type Button}">
+									<Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+										<Line X1="6" X2="18" Y1="6" Y2="18" Stroke="White" StrokeThickness="1" Panel.ZIndex="2"/>
+										<Line X1="18" X2="6" Y1="6" Y2="18" Stroke="White" StrokeThickness="1" Panel.ZIndex="2"/>
+										<Border Background="{TemplateBinding Background}"/>
+									</Grid>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+						<Style.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="Red"/>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</Button.Style>
+			</Button>
+		</Grid>
+		<Grid Height="450" Background="Transparent">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<Button Name="Button_Space_1" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_2" Grid.Column="1" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_3" Grid.Column="2" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_4" Grid.Row="1" Grid.Column="0" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_5" Grid.Row="1" Grid.Column="1" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_6" Grid.Row="1" Grid.Column="2" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_7" Grid.Row="2" Grid.Column="0" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_8" Grid.Row="2" Grid.Column="1" Style="{StaticResource Button_Space}"/>
+			<Button Name="Button_Space_9" Grid.Row="2" Grid.Column="2" Style="{StaticResource Button_Space}"/>
+		</Grid>
+		<Grid Height="125">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="2*"/>
+				<RowDefinition Height="2*"/>
+				<RowDefinition Height="1*"/>
+			</Grid.RowDefinitions>
+			<Label Name="Label_Player1_Score" Style="{StaticResource Label_Menu}" Content="Player 1 Score:"/>
+			<Label Name="Label_Player2_Score" Style="{StaticResource Label_Menu}" Content="Player 2 Score:" Grid.Row="1"/>
+		</Grid>
+	</StackPanel>
+</Window>
